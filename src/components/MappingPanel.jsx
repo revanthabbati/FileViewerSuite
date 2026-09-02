@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { getAllTransactionSets } from '../lib/flatten'
 import { FIELD_LABELS } from './QuickFacts'
+import ApiDocImport from './ApiDocImport'
 
 function CopyButton({ text }) {
   const [copied, setCopied] = useState(false)
@@ -89,6 +90,10 @@ export default function MappingPanel({ parsed }) {
           </div>
         )
       })}
+
+      <div className="api-doc-import-wrapper">
+        <ApiDocImport parsed={parsed} />
+      </div>
     </div>
   )
 }

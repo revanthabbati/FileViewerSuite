@@ -2,12 +2,16 @@
 
 A browser-based tool that takes a raw EDI file (ANSI X12, with basic EDIFACT support) and produces:
 
-- **A plain-English breakdown** — every segment and element, described in normal words instead of codes, so someone with zero EDI background can read a client's file and understand what it says.
+- **A plain-English breakdown** — every segment and element, described in normal words instead of codes, so someone with zero EDI background can read a client's file and understand what it says. Includes a live search filter and Expand All / Collapse All controls.
 - **A segment table** — every segment in the file in one flat, searchable table.
 - **A suggested API mapping** — key business fields (PO number, ship/delivery dates, ship-to/ship-from, carrier, totals, etc.) pulled out into a flat JSON object, with a pointer back to the exact segment each field came from, as a starting point for mapping the file into an internal API payload.
+- **API documentation import** — upload your own API docs (PDF or Word) or paste a field list / JSON example, and the tool fuzzy-matches field names from your docs against the fields found in the EDI file, with a confidence score per match.
+- **Structural validation** — checks that control numbers (ISA/IEA, GS/GE, ST/SE) and segment/group counts are internally consistent, and flags it clearly when a file looks truncated or hand-edited.
 - **A raw view** — the file split cleanly into segments, with the detected delimiters shown.
+- **A built-in "What is EDI?" glossary** — a short explainer of the envelope structure and common terms, for anyone opening an EDI file for the first time.
+- Light / dark / system theme toggle.
 
-Everything runs client-side in the browser. No file content is ever uploaded to a server.
+Everything runs client-side in the browser, including the PDF/Word parsing (via pdf.js and mammoth.js). No file content is ever uploaded to a server.
 
 ## Why this exists
 
@@ -53,6 +57,10 @@ If you rename the repository to something other than `EDIViewer`, update the `ba
 ## Extending the dictionary
 
 Segment and element definitions live in `src/lib/segmentDictionary.js`. Qualifier code tables live in `src/lib/qualifiers.js`. Transaction set names live in `src/lib/transactionSets.js`. The heuristics that populate the "Suggested API Mapping" tab live in `extractBusinessSummary()` in `src/lib/ediParser.js` — add a case there for any new field you want auto-extracted.
+
+## How the API-doc matching works
+
+`src/lib/docExtractor.js` pulls text out of an uploaded PDF/DOCX (or pasted text) and heuristically extracts things that look like field names (JSON keys, table columns, "name - description" lines, snake_case/camelCase tokens). `src/lib/fieldMatcher.js` then scores each EDI field against each extracted candidate using token overlap plus an abbreviation-expansion table (`po` → purchase/order, `scac` → carrier/code/alpha, etc.). It's a heuristic, not a certainty — the UI always presents it as a suggestion with a confidence percentage, not a final mapping.
 
 ## Project structure
 

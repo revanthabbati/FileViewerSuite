@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import InputPanel from './components/InputPanel'
 import SummaryBar from './components/SummaryBar'
 import TransactionBreakdown from './components/TransactionBreakdown'
@@ -6,20 +6,42 @@ import SegmentTable from './components/SegmentTable'
 import MappingPanel from './components/MappingPanel'
 import RawView from './components/RawView'
 import ErrorBanner from './components/ErrorBanner'
+import ValidationPanel from './components/ValidationPanel'
+import ThemeToggle from './components/ThemeToggle'
+import GlossaryModal from './components/GlossaryModal'
+import Footer from './components/Footer'
 import { parseEDI } from './lib/ediParser'
+import { validateStructure } from './lib/validate'
 
 const TABS = [
-  { key: 'breakdown', label: 'Plain-English Breakdown' },
-  { key: 'table', label: 'Segment Table' },
-  { key: 'mapping', label: 'Suggested API Mapping' },
-  { key: 'raw', label: 'Raw EDI' },
+  { key: 'breakdown', label: 'Plain-English Breakdown', icon: '📖' },
+  { key: 'table', label: 'Segment Table', icon: '☰' },
+  { key: 'mapping', label: 'Suggested API Mapping', icon: '⇄' },
+  { key: 'raw', label: 'Raw EDI', icon: '{ }' },
 ]
+
+function useTheme() {
+  const [theme, setTheme] = useState(() => localStorage.getItem('edi-viewer-theme') || 'system')
+  useEffect(() => {
+    if (theme === 'system') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+    localStorage.setItem('edi-viewer-theme', theme)
+  }, [theme])
+  return [theme, setTheme]
+}
 
 export default function App() {
   const [input, setInput] = useState('')
   const [parsed, setParsed] = useState(null)
   const [error, setError] = useState(null)
   const [activeTab, setActiveTab] = useState('breakdown')
+  const [showGlossary, setShowGlossary] = useState(false)
+  const [theme, setTheme] = useTheme()
+
+  const validationIssues = useMemo(() => (parsed ? validateStructure(parsed) : []), [parsed])
 
   const handleParse = () => {
     setError(null)
@@ -43,7 +65,18 @@ export default function App() {
     <div className="app-shell">
       <header className="app-header">
         <div className="app-header-inner">
-          <h1>EDI Viewer</h1>
+          <div className="app-header-top">
+            <div className="brand">
+              <span className="brand-mark">⇄</span>
+              <h1>EDI Viewer</h1>
+            </div>
+            <div className="app-header-actions">
+              <button className="btn btn-ghost" onClick={() => setShowGlossary(true)}>
+                What is EDI?
+              </button>
+              <ThemeToggle theme={theme} onChange={setTheme} />
+            </div>
+          </div>
           <p>Paste or upload an EDI file to get a plain-English breakdown, segment reference, and suggested API field mapping.</p>
         </div>
       </header>
@@ -56,6 +89,7 @@ export default function App() {
         {parsed && (
           <>
             <SummaryBar parsed={parsed} />
+            <ValidationPanel issues={validationIssues} />
 
             <nav className="tab-bar">
               {TABS.map((tab) => (
@@ -64,6 +98,7 @@ export default function App() {
                   className={`tab-btn ${activeTab === tab.key ? 'tab-btn-active' : ''}`}
                   onClick={() => setActiveTab(tab.key)}
                 >
+                  <span className="tab-icon">{tab.icon}</span>
                   {tab.label}
                 </button>
               ))}
@@ -77,12 +112,8 @@ export default function App() {
         )}
       </main>
 
-      <footer className="app-footer">
-        <p>
-          Runs entirely in your browser — nothing is uploaded to a server. Supports ANSI X12 (full) and EDIFACT
-          (basic). Built for reviewing client EDI files before mapping them into internal APIs.
-        </p>
-      </footer>
+      {showGlossary && <GlossaryModal onClose={() => setShowGlossary(false)} />}
+      <Footer />
     </div>
   )
 }

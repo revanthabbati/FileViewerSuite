@@ -1,4 +1,4 @@
-# Viewer Suite: EML, EDI & Parquet
+# FileViewerSuite: EML, EDI & Parquet
 
 Viewer Suite is one browser-only workspace for the file types our integrations produce: customer **emails (.eml)**, **EDI documents (ANSI X12 / EDIFACT)** and **Apache Parquet datasets**. It replaces the separate *EML Viewer* and *EDI Viewer* apps with a single product that shares one UI.
 
@@ -39,14 +39,14 @@ This is the full feature set of the original EDI Viewer, unchanged:
 ```bash
 cd viewer-suite
 npm install
-npm run dev      # http://localhost:5173/EDIViewer/
+npm run dev      # http://localhost:5173/FileViewerSuite/
 npm run build    # production bundle in viewer-suite/dist
 npm run lint
 ```
 
 ## Deployment
 
-`.github/workflows/deploy.yml` builds this folder and publishes `viewer-suite/dist` to GitHub Pages on every push to `main`. The site is served under `/EDIViewer/`. If the repository is renamed, update `base` in `vite.config.js`.
+`.github/workflows/deploy.yml` builds this folder and publishes `viewer-suite/dist` to GitHub Pages on every push to `main`. The site is served under `/FileViewerSuite/`. If the repository is renamed, update `base` in `vite.config.js`.
 
 ## Architecture
 

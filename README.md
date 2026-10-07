@@ -1,6 +1,6 @@
 # EDI Viewer
 
-> **Now part of Viewer Suite.** The EDI Viewer, the EML Viewer and a new Parquet viewer have been merged into a single app in [`viewer-suite/`](viewer-suite/README.md). GitHub Pages now deploys that app. The standalone EDI Viewer source below is kept for reference.
+> **Now part of FileViewerSuite.** Live at https://revanthabbati.github.io/FileViewerSuite/. The EDI Viewer, the EML Viewer and a new Parquet viewer have been merged into a single app in [`viewer-suite/`](viewer-suite/README.md). GitHub Pages now deploys that app. The standalone EDI Viewer source below is kept for reference.
 
 A browser-based tool that takes a raw EDI file (ANSI X12, with basic EDIFACT support) and produces:
 

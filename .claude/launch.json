@@ -2,6 +2,12 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "viewer-suite-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "viewer-suite", "run", "dev", "--", "--port", "5174", "--strictPort"],
+      "port": 5174
+    },
+    {
       "name": "ediviewer-dev",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],

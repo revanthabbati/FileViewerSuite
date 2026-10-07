@@ -1,5 +1,7 @@
 # EDI Viewer
 
+> **Now part of Viewer Suite.** The EDI Viewer, the EML Viewer and a new Parquet viewer have been merged into a single app in [`viewer-suite/`](viewer-suite/README.md). GitHub Pages now deploys that app. The standalone EDI Viewer source below is kept for reference.
+
 A browser-based tool that takes a raw EDI file (ANSI X12, with basic EDIFACT support) and produces:
 
 - **A plain-English breakdown** — every segment and element, described in normal words instead of codes, so someone with zero EDI background can read a client's file and understand what it says. Includes a live search filter and Expand All / Collapse All controls.

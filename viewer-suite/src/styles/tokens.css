@@ -1,0 +1,140 @@
+/*
+ * Design tokens. The EDI module was written against --bg/--surface/--accent…,
+ * so those names are the shared vocabulary for every module.
+ */
+:root {
+  --bg: #f4f6fa;
+  --surface: #ffffff;
+  --surface-alt: #f1f4f9;
+  --surface-sunken: #e9edf4;
+  --border: #dfe4ec;
+  --border-strong: #c9d1de;
+  --text: #121a2b;
+  --text-muted: #5b6577;
+  --text-subtle: #8590a3;
+  --accent: #3b5bdb;
+  --accent-dark: #2541b2;
+  --accent-soft: #eaefff;
+  --on-accent: #ffffff;
+  --warn: #b45309;
+  --warn-bg: #fef4e2;
+  --error: #c62828;
+  --error-bg: #fdecea;
+  --ok: #15803d;
+  --ok-bg: #e9f9ef;
+  --highlight-bg: #fff4c2;
+
+  /* Per-format accents */
+  --eml: #3b5bdb;
+  --eml-soft: #eaefff;
+  --edi: #0f8a7e;
+  --edi-soft: #e2f6f3;
+  --parquet: #7c3aed;
+  --parquet-soft: #f1eaff;
+  --eml-dark: #2541b2;
+  --edi-dark: #0b6b62;
+  --parquet-dark: #5b21b6;
+
+  --sidebar-bg: #0f172a;
+  --sidebar-text: #cbd5e1;
+  --sidebar-muted: #7d8aa3;
+  --sidebar-hover: rgba(255, 255, 255, 0.06);
+  --sidebar-active: rgba(255, 255, 255, 0.11);
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08);
+  --shadow-lg: 0 24px 64px rgba(16, 24, 40, 0.22);
+
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+
+  --mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --topbar-h: 60px;
+  --sidebar-w: 256px;
+  --statusbar-h: 32px;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0b0f17;
+    --surface: #131926;
+    --surface-alt: #1a2131;
+    --surface-sunken: #0f1520;
+    --border: #262f42;
+    --border-strong: #354057;
+    --text: #e6eaf2;
+    --text-muted: #9aa5b8;
+    --text-subtle: #6f7b90;
+    --accent: #7091ff;
+    --accent-dark: #9bb2ff;
+    --accent-soft: #1b2542;
+    --on-accent: #0b1020;
+    --warn: #f0b350;
+    --warn-bg: #33250a;
+    --error: #f07070;
+    --error-bg: #3a1515;
+    --ok: #4ade80;
+    --ok-bg: #0f2e1c;
+    --highlight-bg: #3b3210;
+    --eml: #7091ff;
+    --eml-soft: #1b2542;
+    --edi: #2dd4bf;
+    --edi-soft: #0f2c2a;
+    --parquet: #a78bfa;
+    --parquet-soft: #241a3d;
+    --eml-dark: #9bb2ff;
+    --edi-dark: #5eead4;
+    --parquet-dark: #c4b5fd;
+    --sidebar-bg: #080b12;
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.55);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #0b0f17;
+  --surface: #131926;
+  --surface-alt: #1a2131;
+  --surface-sunken: #0f1520;
+  --border: #262f42;
+  --border-strong: #354057;
+  --text: #e6eaf2;
+  --text-muted: #9aa5b8;
+  --text-subtle: #6f7b90;
+  --accent: #7091ff;
+  --accent-dark: #9bb2ff;
+  --accent-soft: #1b2542;
+  --on-accent: #0b1020;
+  --warn: #f0b350;
+  --warn-bg: #33250a;
+  --error: #f07070;
+  --error-bg: #3a1515;
+  --ok: #4ade80;
+  --ok-bg: #0f2e1c;
+  --highlight-bg: #3b3210;
+  --eml: #7091ff;
+  --eml-soft: #1b2542;
+  --edi: #2dd4bf;
+  --edi-soft: #0f2c2a;
+  --parquet: #a78bfa;
+  --parquet-soft: #241a3d;
+  --eml-dark: #9bb2ff;
+  --edi-dark: #5eead4;
+  --parquet-dark: #c4b5fd;
+  --sidebar-bg: #080b12;
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.55);
+  color-scheme: dark;
+}
+
+/* Each module scopes --accent to its own format colour. */
+.module-eml { --accent: var(--eml); --accent-soft: var(--eml-soft); --accent-dark: var(--eml-dark); }
+.module-edi { --accent: var(--edi); --accent-soft: var(--edi-soft); --accent-dark: var(--edi-dark); }
+.module-parquet { --accent: var(--parquet); --accent-soft: var(--parquet-soft); --accent-dark: var(--parquet-dark); }
